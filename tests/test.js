@@ -10,4 +10,9 @@ describe("testing", function() {
   it("can import a file", function() {
     testFile.should.equal("It works from content.");
   });
+
+  it("knows right from wrong", function() {
+    (true).should.equal(true);
+  });
+
 });
