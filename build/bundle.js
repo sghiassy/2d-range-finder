@@ -1029,7 +1029,7 @@
 	  });
 
 	  it("knows right from wrong", function() {
-	    (true).should.equal(true);
+	    (false).should.equal(true);
 	  });
 
 	});
