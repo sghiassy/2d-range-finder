@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --inline",
-    "test": "webpack-dev-server 'mocha!./tests/test.js' --output-filename test.js"
+    "test": "webpack-dev-server 'mocha!./tests/test.js' --output-filename test.js --port 8081"
   },
   "author": "",
   "license": "ISC",

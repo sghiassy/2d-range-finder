@@ -23,5 +23,5 @@ npm test
 Then navigate your browser to
 
 ```
-http://localhost:8080/webpack-dev-server/test
+http://localhost:8081/webpack-dev-server/test
 ```
