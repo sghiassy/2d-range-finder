@@ -1,19 +1,7 @@
-// require the core node events module
-var EventEmitter = require('events').EventEmitter;
-var txt = require('./src/TestElement');
+var React = require('react');// require the core node events module
+var Greeting = require('./src/Greeting');
 
-//create a new event emitter
-var emitter = new EventEmitter;
-
-// set up a listener for the event
-emitter.on('pizza', function(message){
-  console.log(message);
-});
-
-// emit an event
-emitter.emit('pizza', 'pizza is extremely yummy');
-
-document.write(txt);
-
-
-require("./src/styles.css");
+React.render(
+  <Greeting name="World"/>,
+  document.body
+);
