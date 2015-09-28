@@ -1,6 +1,6 @@
 // require the core node events module
 var EventEmitter = require('events').EventEmitter;
-var txt = require('./src/temp');
+var txt = require('./src/TestElement');
 
 //create a new event emitter
 var emitter = new EventEmitter;

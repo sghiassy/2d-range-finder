@@ -1,5 +1,5 @@
 var should = require('should');
-var testFile = require('../src/temp');
+var testFile = require('../src/TestElement');
 
 describe("testing", function() {
 
