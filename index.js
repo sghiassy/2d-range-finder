@@ -1,6 +1,6 @@
 // require the core node events module
 var EventEmitter = require('events').EventEmitter;
-var txt = require('./temp');
+var txt = require('./src/temp');
 
 //create a new event emitter
 var emitter = new EventEmitter;
@@ -16,4 +16,4 @@ emitter.emit('pizza', 'pizza is extremely yummy');
 document.write(txt);
 
 
-require("./styles.css");
+require("./src/styles.css");
