@@ -1,5 +1,5 @@
 var should = require('should');
-var testFile = require('../src/TestElement');
+var testFile = require('../src/Main');
 
 describe("testing", function() {
 
@@ -8,7 +8,7 @@ describe("testing", function() {
   });
 
   it("can import a file", function() {
-    testFile.should.equal("test this");
+    testFile.should.be.ok;
   });
 
   it("knows right from wrong", function() {
