@@ -48,9 +48,10 @@
 
 	var React = __webpack_require__(1); // require the core node events module
 	var Main = __webpack_require__(157);
-	var styles = __webpack_require__(158);
+	var reset = __webpack_require__(158);
+	var globalStyle = __webpack_require__(162);
 
-	React.render(React.createElement(Main, { name: 'World' }), document.body);
+	React.render(React.createElement(Main, null), document.body);
 
 /***/ },
 /* 1 */
@@ -20439,41 +20440,37 @@
 	var Greeting = React.createClass({
 	  displayName: 'Greeting',
 
-	  getInitialState: function getInitialState() {
-	    return { header: '2D Point Finder' };
-	  },
-
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'wrapper' },
+	      { style: Style.wrapper },
 	      React.createElement(
 	        'h1',
-	        { onClick: this.onClick, style: Style.header },
-	        this.state.header
+	        { style: Style.header },
+	        '2D Point Finder'
 	      ),
-	      React.createElement(
-	        'div',
-	        { id: 'left' },
-	        React.createElement('canvas', { style: Style.canvas, width: '300', height: '200' })
-	      ),
-	      React.createElement('div', { id: 'right' })
+	      React.createElement('canvas', { style: Style.canvas })
 	    );
-	  },
-
-	  onClick: function onClick(evt) {
-	    this.setState({ header: 'Shaheen' });
 	  }
 	});
 
 	var Style = {
+	  wrapper: {
+	    backgroundColor: 'green',
+	    height: '100%',
+	    textAlign: 'center'
+	  },
 	  header: {
 	    color: 'white',
-	    fontFamily: "sans-serif"
+	    fontFamily: "sans-serif",
+	    fontSize: '30px',
+	    paddingTop: '10px',
+	    marginBottom: '10px'
 	  },
 	  canvas: {
 	    backgroundColor: 'white',
-	    border: 'thin red solid'
+	    width: '80%',
+	    height: '90%'
 	  }
 	};
 
@@ -20495,8 +20492,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./styles.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./styles.css");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./reset.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./reset.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20514,7 +20511,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n    background: green;\n}", ""]);
+	exports.push([module.id, "/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n", ""]);
 
 	// exports
 
@@ -20798,6 +20795,46 @@
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
+
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(163);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(161)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./global.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./global.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(160)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "html, body {\n    width: 100%;\n    height: 100%;\n}\n", ""]);
+
+	// exports
 
 
 /***/ }
