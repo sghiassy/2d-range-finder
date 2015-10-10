@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var App = require('./app');
 
 var Canvas = React.createClass({
   render() {
@@ -12,9 +13,11 @@ var Canvas = React.createClass({
   componentDidMount() {
     var canvas = this.getDOMNode();
     var ctx = canvas.getContext("2d");
-    ctx.beginPath();
-    ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-    ctx.stroke();
+    this.app = new App({ctx:ctx});
+  },
+
+  onPress(evt) {
+    this.app.onClick(evt)
   }
 });
 
