@@ -7,7 +7,7 @@ var Greeting = React.createClass({
     return (
       <div style={Style.wrapper}>
         <Title displayName={"2D Point Finder"} />
-        <canvas id="mainCanvas" style={Style.canvas} width="1000px" height="500px" onClick={this.onPress}></canvas>
+        <Canvas />
       </div>
     );
   },
@@ -22,9 +22,6 @@ var Style = {
     backgroundColor:'green',
     height: '100%',
     textAlign: 'center'
-  },
-  canvas: {
-    backgroundColor: 'white',
   }
 }
 
