@@ -48,8 +48,8 @@
 
 	var React = __webpack_require__(1); // require the core node events module
 	var Main = __webpack_require__(157);
-	var reset = __webpack_require__(158);
-	var globalStyle = __webpack_require__(162);
+	var reset = __webpack_require__(159);
+	var globalStyle = __webpack_require__(163);
 
 	React.render(React.createElement(Main, null), document.body);
 
@@ -20436,6 +20436,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var Title = __webpack_require__(158);
 
 	var Greeting = React.createClass({
 	  displayName: 'Greeting',
@@ -20444,11 +20445,7 @@
 	    return React.createElement(
 	      'div',
 	      { style: Style.wrapper },
-	      React.createElement(
-	        'h1',
-	        { style: Style.header },
-	        '2D Point Finder'
-	      ),
+	      React.createElement(Title, { displayName: "2D Point Finder" }),
 	      React.createElement('canvas', { style: Style.canvas })
 	    );
 	  }
@@ -20459,13 +20456,6 @@
 	    backgroundColor: 'green',
 	    height: '100%',
 	    textAlign: 'center'
-	  },
-	  header: {
-	    color: 'white',
-	    fontFamily: "sans-serif",
-	    fontSize: '30px',
-	    paddingTop: '10px',
-	    marginBottom: '10px'
 	  },
 	  canvas: {
 	    backgroundColor: 'white',
@@ -20480,13 +20470,45 @@
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Title = React.createClass({
+	  displayName: 'Title',
+
+	  render: function render() {
+	    return React.createElement(
+	      'h1',
+	      { style: Style.header },
+	      this.props.displayName
+	    );
+	  }
+	});
+
+	var Style = {
+	  header: {
+	    color: 'white',
+	    fontFamily: "sans-serif",
+	    fontSize: '30px',
+	    paddingTop: '10px',
+	    marginBottom: '10px'
+	  }
+	};
+
+	module.exports = Title;
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(159);
+	var content = __webpack_require__(160);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(161)(content, {});
+	var update = __webpack_require__(162)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20503,10 +20525,10 @@
 	}
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(160)();
+	exports = module.exports = __webpack_require__(161)();
 	// imports
 
 
@@ -20517,7 +20539,7 @@
 
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports) {
 
 	/*
@@ -20573,7 +20595,7 @@
 
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -20798,16 +20820,16 @@
 
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(163);
+	var content = __webpack_require__(164);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(161)(content, {});
+	var update = __webpack_require__(162)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -20824,10 +20846,10 @@
 	}
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(160)();
+	exports = module.exports = __webpack_require__(161)();
 	// imports
 
 

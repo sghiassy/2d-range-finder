@@ -1,10 +1,11 @@
 var React = require('react');
+var Title = require('./title');
 
 var Greeting = React.createClass({
   render: function() {
     return (
       <div style={Style.wrapper}>
-        <h1 style={Style.header}>2D Point Finder</h1>
+        <Title displayName={"2D Point Finder"} />
         <canvas style={Style.canvas} ></canvas>
       </div>
     );
@@ -16,13 +17,6 @@ var Style = {
     backgroundColor:'green',
     height: '100%',
     textAlign: 'center'
-  },
-  header: {
-    color: 'white',
-    fontFamily: "sans-serif",
-    fontSize: '30px',
-    paddingTop: '10px',
-    marginBottom: '10px',
   },
   canvas: {
     backgroundColor: 'white',
