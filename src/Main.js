@@ -6,12 +6,13 @@ var Greeting = React.createClass({
   },
 
   render: function() {
+    var height = window.innerHeight;
+    var width = window.innerWidth;
+
     return (
-      <div className="wrapper">
+      <div style={Style.wrapper}>
         <h1 onClick={this.onClick} style={Style.header}>{this.state.header}</h1>
-        <div id="left">
-          <canvas style={Style.canvas} width="300" height="200"></canvas>
-        </div>
+        <canvas style={Style.canvas} ></canvas>
         <div id="right">
         </div>
       </div>
@@ -24,13 +25,23 @@ var Greeting = React.createClass({
 });
 
 var Style = {
+  wrapper: {
+    backgroundColor:'green',
+    height: '100%',
+    textAlign: 'center'
+  },
   header: {
     color: 'white',
-    fontFamily: "sans-serif"
+    fontFamily: "sans-serif",
+    fontSize: '30px',
+    textAlign: 'center',
+    paddingTop: '10px',
+    marginBottom: '10px',
   },
   canvas: {
     backgroundColor: 'white',
-    border: 'thin red solid'
+    width: '80%',
+    height: '80%'
   }
 }
 
