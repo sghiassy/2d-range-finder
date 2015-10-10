@@ -1,6 +1,6 @@
 var React = require('react');
 var Title = require('./title');
-var Canvas = require('./canvas');
+var Canvas = require('./canvas/canvas');
 
 var Greeting = React.createClass({
   render: function() {
@@ -10,10 +10,6 @@ var Greeting = React.createClass({
         <Canvas />
       </div>
     );
-  },
-
-  onPress: function(evt) {
-    Canvas();
   }
 });
 
