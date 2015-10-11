@@ -23,7 +23,6 @@ class App {
       this.firstPoint = coord;
       this.drawPoint(coord);
     }
-
   }
 
   onMouseMove(evt) {

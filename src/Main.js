@@ -1,6 +1,6 @@
 var React = require('react');
 var Title = require('./title');
-var Canvas = require('./canvas/canvas');
+var Canvas = require('./CanvasElement');
 var Explaination = require('./explaination');
 
 var Main = React.createClass({

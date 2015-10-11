@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var App = require('./app');
+var App = require('./canvas/app');
 
 var Canvas = React.createClass({
   componentDidMount() {
