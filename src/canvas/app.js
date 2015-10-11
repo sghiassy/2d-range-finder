@@ -1,6 +1,6 @@
 'use strict'
 
-var ClickStateMachine = require('./clickStateMachine');
+var ClickStateMachine = require('./ClickFSM');
 var IntervalTree = require('../IntervalSearchTree');
 
 class App {
@@ -15,72 +15,57 @@ class App {
     this.intervalTree = new IntervalTree();
   }
 
-  onClick(evt) {
-    this.clickState.sendMessage('userClicked');
-
-    if (this.clickState.currentState === ClickStateMachine.STATES.DONE) {
-      var coord;
-      var orig = {
-        x: this.temp.x - this.el.getBoundingClientRect().left,
-        y: this.temp.y - this.el.getBoundingClientRect().top
-      };
-
-      var end = {
-        x: evt.pageX - this.el.getBoundingClientRect().left,
-        y: orig.y
-      };
-
-      var userClickedRightToLeft = orig.x < end.x;
-      if (userClickedRightToLeft) {
-        coord = {
-          start: {x: orig.x, y:orig.y},
-          end: {x: end.x, y:end.y}
-        };
-      } else {
-        coord = {
-          start: {x: end.x, y:end.y},
-          end: {x: orig.x, y:orig.y}
-        }
-      }
-
-      var userClickedTheSameSpot = coord.start.x === coord.end.x;
-
-      if (!userClickedTheSameSpot) {
-        this.intervalTree.addInterval({
-          leftIndex: coord.start.x,
-          rightIndex: coord.end.x
-        });
-        this.drawLine(coord);
-        this.drawLineLabel(coord);
-      }
-
-      this.temp = undefined;
-    } else {
-      this.temp = {x:evt.pageX,y:evt.pageY};
-    }
-  }
-
   onMouseDown(evt) {
-    console.log('onMouseDown');
     this.clickState.sendMessage('mouseDown');
     let coord = this.coordFromEvt(evt);
-    this.drawPoint(coord);
+
+    if (this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT) {
+      this.firstPoint = coord;
+      this.drawPoint(coord);
+    }
+
   }
 
   onMouseMove(evt) {
-    console.log('onMouseMove');
     this.clickState.sendMessage('mouseMove');
     let coord = this.coordFromEvt(evt);
 
-    if (this.clickState.currentState === this.clickState.States.FIRSTPOINT) {
+    if (this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT) {
+      this.firstPoint = coord;
       this.clearCanvas();
       this.drawPoint(coord);
+    } else if (this.clickState.currentState === this.clickState.States.MOVING_SECOND_POINT) {
+      if (evt.shiftKey) {
+        this.secondPoint = {
+          x: coord.x,
+          y: this.firstPoint.y
+        };
+      } else {
+        this.secondPoint = coord;
+      }
+
+      this.clearCanvas();
+
+      let line = {
+        start: this.firstPoint,
+        end: this.secondPoint,
+      };
+      this.drawLine(line);
+      this.drawLineLabel(line);
     }
   }
 
   onMouseUp(evt) {
-    console.log('onMouseUp');
     this.clickState.sendMessage('mouseUp');
+    if (this.clickState.currentState === this.clickState.States.OFF) {
+      this.clearCanvas();
+      let line = {
+        start: this.firstPoint,
+        end: this.secondPoint,
+      };
+      this.drawLine(line);
+      this.drawLineLabel(line);
+    }
   }
 
   drawPoint(coord) {
