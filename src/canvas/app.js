@@ -16,6 +16,7 @@ class App {
 
   onMouseDown(evt) {
     this.clickState.sendMessage('mouseDown');
+
     let coord = this.drawingBoard.coordFromEvt(evt);
 
     if (this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT) {
@@ -26,13 +27,16 @@ class App {
 
   onMouseMove(evt) {
     this.clickState.sendMessage('mouseMove');
-    let coord = this.drawingBoard.coordFromEvt(evt);
 
-    if (this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT) {
+    let coord = this.drawingBoard.coordFromEvt(evt);
+    let isMovingFirstPoint = this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT;
+    let isMovingSecondPoint = this.clickState.currentState === this.clickState.States.MOVING_SECOND_POINT;
+
+    if (isMovingFirstPoint) {
       this.firstPoint = coord;
       this.drawingBoard.clearCanvas();
       this.drawingBoard.drawPoint(coord);
-    } else if (this.clickState.currentState === this.clickState.States.MOVING_SECOND_POINT) {
+    } else if (isMovingSecondPoint) {
       if (evt.shiftKey) {
         this.secondPoint = {
           x: coord.x,
@@ -55,7 +59,10 @@ class App {
 
   onMouseUp(evt) {
     this.clickState.sendMessage('mouseUp');
-    if (this.clickState.currentState === this.clickState.States.OFF) {
+
+    let userIsDone = this.clickState.currentState === this.clickState.States.OFF;
+
+    if (userIsDone) {
       this.drawingBoard.clearCanvas();
       let line = {
         start: this.firstPoint,
