@@ -18,7 +18,7 @@ var Canvas = React.createClass({
 
   onPress(evt) {
     this.app.onClick(evt)
-  }
+  },
 });
 
 var Style = {

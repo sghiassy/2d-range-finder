@@ -41,8 +41,12 @@ class App {
         }
       }
 
-      this.drawLine(coord);
-      this.drawLineLabel(coord);
+      var userClickedTheSameSpot = coord.start.x === coord.end.x;
+
+      if (!userClickedTheSameSpot) {
+        this.drawLine(coord);
+        this.drawLineLabel(coord);
+      }
 
       this.temp = undefined;
     } else {
