@@ -2,8 +2,9 @@
 
 var States = {
   OFF: 0,
-  ACTIVE: 1,
-  DONE: 2,
+  FIRSTPOINT: 1,
+  ACTIVE: 2,
+  SECONDPOINT: 3,
 };
 
 class ClickStateMachine {
@@ -13,17 +14,26 @@ class ClickStateMachine {
   }
 
   sendMessage(message) {
-    // since this state machine is binary, the message doesn't actually matter
-    if (this.currentState === States.OFF) {
-      this.currentState = States.ACTIVE;
-    } else if (this.currentState === States.ACTIVE) {
-      this.currentState = States.DONE;
-    } else {
-      this.currentState = States.ACTIVE;
+    if (message === "mouseDown") {
+      if (this.currentState === States.OFF) {
+        this.currentState = States.FIRSTPOINT;
+      }
+    }
+
+    if (message === "mouseMove") {
+
+    }
+
+    if (message === "mouseUp") {
+      if (this.currentState === States.FIRSTPOINT) {
+        this.currentState = States.ACTIVE;
+      } else {
+        this.currentstate = States.OFF;
+      }
     }
   }
 }
 
-ClickStateMachine.STATES = States;
+ClickStateMachine.prototype.States = States;
 
 module.exports = ClickStateMachine;

@@ -67,19 +67,20 @@ class App {
     this.drawPoint(coord);
   }
 
-  coordFromEvt(evt) {
-    return {
-      x: evt.pageX - this.el.getBoundingClientRect().left,
-      y: evt.pageY - this.el.getBoundingClientRect().top
+  onMouseMove(evt) {
+    console.log('onMouseMove');
+    this.clickState.sendMessage('mouseMove');
+    let coord = this.coordFromEvt(evt);
+
+    if (this.clickState.currentState === this.clickState.States.FIRSTPOINT) {
+      this.clearCanvas();
+      this.drawPoint(coord);
     }
   }
 
   onMouseUp(evt) {
     console.log('onMouseUp');
-  }
-
-  onMouseMove(evt) {
-    console.log('onMouseMove');
+    this.clickState.sendMessage('mouseUp');
   }
 
   drawPoint(coord) {
@@ -117,6 +118,17 @@ class App {
   drawLabel(coord) {
     var label = "{x:" + coord.x + ", y:" + coord.y + "}";
     this.ctx.fillText(label, coord.x, coord.y - 5);
+  }
+
+  coordFromEvt(evt) {
+    return {
+      x: evt.pageX - this.el.getBoundingClientRect().left,
+      y: evt.pageY - this.el.getBoundingClientRect().top
+    }
+  }
+
+  clearCanvas() {
+    this.ctx.clearRect(0, 0, this.el.width, this.el.height);
   }
 }
 
