@@ -13,7 +13,7 @@ var Canvas = React.createClass({
   componentDidMount() {
     var canvas = this.getDOMNode();
     var ctx = canvas.getContext("2d");
-    this.app = new App({ctx:ctx});
+    this.app = new App({ctx:ctx, el:canvas});
   },
 
   onPress(evt) {
