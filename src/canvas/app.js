@@ -1,6 +1,7 @@
 'use strict'
 
 var ClickStateMachine = require('./clickStateMachine');
+var IntervalTree = require('../IntervalSearchTree');
 
 class App {
   constructor(props) {
@@ -11,6 +12,7 @@ class App {
     this.ctx.font = "10px Arial";
 
     this.clickState = new ClickStateMachine();
+    this.intervalTree = new IntervalTree();
   }
 
   onClick(evt) {
@@ -44,6 +46,10 @@ class App {
       var userClickedTheSameSpot = coord.start.x === coord.end.x;
 
       if (!userClickedTheSameSpot) {
+        this.intervalTree.addInterval({
+          leftIndex: coord.start.x,
+          rightIndex: coord.end.x
+        });
         this.drawLine(coord);
         this.drawLineLabel(coord);
       }
