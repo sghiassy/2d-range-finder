@@ -1,86 +1,75 @@
 'use strict'
 
-var ClickStateMachine = require('./clickStateMachine');
+var ClickStateMachine = require('./ClickFSM');
 var IntervalTree = require('../IntervalSearchTree');
+var DrawingBoard = require('./DrawingBoard');
 
 class App {
   constructor(props) {
-    this.el = props.el;
-
-    // Setup Draw Context
-    this.ctx = props.ctx;
-    this.ctx.font = "10px Arial";
-
     this.clickState = new ClickStateMachine();
     this.intervalTree = new IntervalTree();
+    this.drawingBoard = new DrawingBoard({
+      ctx: props.ctx,
+      el: props.el
+    });
   }
 
-  onClick(evt) {
-    this.clickState.sendMessage('userClicked');
+  onMouseDown(evt) {
+    this.clickState.sendMessage('mouseDown');
 
-    if (this.clickState.currentState === ClickStateMachine.STATES.DONE) {
-      var coord;
-      var orig = {
-        x: this.temp.x - this.el.getBoundingClientRect().left,
-        y: this.temp.y - this.el.getBoundingClientRect().top
-      };
+    let coord = this.drawingBoard.coordFromEvt(evt);
 
-      var end = {
-        x: evt.pageX - this.el.getBoundingClientRect().left,
-        y: orig.y
-      };
-
-      var userClickedRightToLeft = orig.x < end.x;
-      if (userClickedRightToLeft) {
-        coord = {
-          start: {x: orig.x, y:orig.y},
-          end: {x: end.x, y:end.y}
-        };
-      } else {
-        coord = {
-          start: {x: end.x, y:end.y},
-          end: {x: orig.x, y:orig.y}
-        }
-      }
-
-      var userClickedTheSameSpot = coord.start.x === coord.end.x;
-
-      if (!userClickedTheSameSpot) {
-        this.intervalTree.addInterval({
-          leftIndex: coord.start.x,
-          rightIndex: coord.end.x
-        });
-        this.drawLine(coord);
-        this.drawLineLabel(coord);
-      }
-
-      this.temp = undefined;
-    } else {
-      this.temp = {x:evt.pageX,y:evt.pageY};
+    if (this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT) {
+      this.firstPoint = coord;
+      this.drawingBoard.drawPoint(coord);
     }
   }
 
-  drawLine(coord) {
-    this.ctx.beginPath();
-    this.ctx.moveTo(coord.start.x, coord.start.y);
-    this.ctx.lineTo(coord.end.x, coord.end.y);
-    this.ctx.stroke();
+  onMouseMove(evt) {
+    this.clickState.sendMessage('mouseMove');
+
+    let coord = this.drawingBoard.coordFromEvt(evt);
+    let isMovingFirstPoint = this.clickState.currentState === this.clickState.States.MOVING_FIRST_POINT;
+    let isMovingSecondPoint = this.clickState.currentState === this.clickState.States.MOVING_SECOND_POINT;
+
+    if (isMovingFirstPoint) {
+      this.firstPoint = coord;
+      this.drawingBoard.clearCanvas();
+      this.drawingBoard.drawPoint(coord);
+    } else if (isMovingSecondPoint) {
+      let userWantsAStraightLine = evt.shiftKey;
+
+      if (userWantsAStraightLine) {
+        this.secondPoint = {x: coord.x, y: this.firstPoint.y};
+      } else {
+        this.secondPoint = coord;
+      }
+
+      // Construct the line
+      let line = {
+        start: this.firstPoint,
+        end: this.secondPoint,
+      };
+
+      this.drawingBoard.clearCanvas();
+      this.drawingBoard.drawLine(line);
+      this.drawingBoard.drawLineLabel(line);
+    }
   }
 
-  drawLineLabel(coord) {
-    var startingPointTxt = "{x:" + coord.start.x + ", y:" + coord.start.y + "}";
-    var endingPointTxt = "{x:" + coord.end.x + ", y:" + coord.end.y + "}";
+  onMouseUp(evt) {
+    this.clickState.sendMessage('mouseUp');
 
-    var labelWidth = this.ctx.measureText(startingPointTxt).width + this.ctx.measureText(endingPointTxt).width;
-    var lineLength = coord.end.x - coord.start.x;
-    var lineIsTooShort = labelWidth >= lineLength;
+    let userIsDone = this.clickState.currentState === this.clickState.States.OFF;
 
-    if (!lineIsTooShort) {
-      this.ctx.fillText(startingPointTxt, coord.start.x, coord.start.y-5);
-      this.ctx.fillText(endingPointTxt, coord.end.x - this.ctx.measureText(endingPointTxt).width, coord.end.y-5);
-    } else {
-      var shortenedLabel = "{x:" + coord.start.x + ", y:" + coord.start.y + " x:" + coord.end.x + "}";
-      this.ctx.fillText(shortenedLabel, coord.start.x, coord.start.y-5);
+    if (userIsDone) {
+      this.drawingBoard.clearCanvas();
+      let line = {
+        start: this.firstPoint,
+        end: this.secondPoint,
+      };
+      this.drawingBoard.drawLine(line);
+      this.drawingBoard.drawLineLabel(line);
     }
   }
 }
