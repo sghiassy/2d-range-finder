@@ -9,14 +9,15 @@ class IntervalTree {
   }
 
   addInterval(interval) {
-    if (this.HEAD === undefined) {
+    var isFirstInterval = this.HEAD === undefined;
+
+    if (isFirstInterval) {
       this.HEAD = new Node({
         leftIndex: interval.leftIndex,
         rightIndex: interval.rightIndex,
         maxRightIndex: interval.rightIndex
       });
     } else {
-      debugger
       addNodeToTree(this.HEAD, interval);
     }
   }
@@ -30,6 +31,9 @@ class IntervalTree {
   }
 }
 
+/**
+ * Recursive function to add an interval to a Binary Search Tree
+ */
 function addNodeToTree(node, interval) {
   if (node === undefined) {
     return undefined;

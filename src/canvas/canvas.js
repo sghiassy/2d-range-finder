@@ -12,13 +12,21 @@ var Canvas = React.createClass({
 
   render() {
     return (
-      <canvas style={Style.canvas} width="1000px" height="500px" onClick={this.onPress}></canvas>
+      <canvas style={Style.canvas} width="1000px" height="500px" onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} onMouseMove={this.onMouseMove}></canvas>
     );
   },
 
-  onPress(evt) {
-    this.app.onClick(evt)
+  mouseDown(evt) {
+    this.app.onMouseDown(evt);
   },
+
+  onMouseMove(evt) {
+    this.app.onMouseMove(evt);
+  },
+
+  mouseUp(evt) {
+    this.app.onMouseUp(evt);
+  }
 });
 
 var Style = {

@@ -60,6 +60,36 @@ class App {
     }
   }
 
+  onMouseDown(evt) {
+    console.log('onMouseDown');
+    this.clickState.sendMessage('mouseDown');
+    let coord = this.coordFromEvt(evt);
+    this.drawPoint(coord);
+  }
+
+  coordFromEvt(evt) {
+    return {
+      x: evt.pageX - this.el.getBoundingClientRect().left,
+      y: evt.pageY - this.el.getBoundingClientRect().top
+    }
+  }
+
+  onMouseUp(evt) {
+    console.log('onMouseUp');
+  }
+
+  onMouseMove(evt) {
+    console.log('onMouseMove');
+  }
+
+  drawPoint(coord) {
+    this.drawLine({
+      start: coord,
+      end: coord
+    });
+    this.drawLabel(coord);
+  }
+
   drawLine(coord) {
     this.ctx.beginPath();
     this.ctx.moveTo(coord.start.x, coord.start.y);
@@ -82,6 +112,11 @@ class App {
       var shortenedLabel = "{x:" + coord.start.x + ", y:" + coord.start.y + " x:" + coord.end.x + "}";
       this.ctx.fillText(shortenedLabel, coord.start.x, coord.start.y-5);
     }
+  }
+
+  drawLabel(coord) {
+    var label = "{x:" + coord.x + ", y:" + coord.y + "}";
+    this.ctx.fillText(label, coord.x, coord.y - 5);
   }
 }
 

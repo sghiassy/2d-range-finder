@@ -36,6 +36,11 @@ var Explaination = React.createClass({
               <li>Binary Search Tree</li>
             </ul>
           </li>
+          <li>Hosting
+            <ul>
+              <li>Heroku</li>
+            </ul>
+          </li>
         </ul>
       </div>
     );
