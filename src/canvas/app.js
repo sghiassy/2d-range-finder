@@ -17,6 +17,7 @@ class App {
     this.clickState.sendMessage('userClicked');
 
     if (this.clickState.currentState === ClickStateMachine.STATES.DONE) {
+      var coord;
       var orig = {
         x: this.temp.x - this.el.getBoundingClientRect().left,
         y: this.temp.y - this.el.getBoundingClientRect().top
@@ -27,15 +28,21 @@ class App {
         y: orig.y
       };
 
-      this.drawLine({
-        start: {x: orig.x, y:orig.y},
-        end: {x: end.x, y:end.y}
-      });
+      var userClickedRightToLeft = orig.x < end.x;
+      if (userClickedRightToLeft) {
+        coord = {
+          start: {x: orig.x, y:orig.y},
+          end: {x: end.x, y:end.y}
+        };
+      } else {
+        coord = {
+          start: {x: end.x, y:end.y},
+          end: {x: orig.x, y:orig.y}
+        }
+      }
 
-      this.drawLineLabel({
-        start: {x: orig.x, y:orig.y},
-        end: {x: end.x, y:end.y}
-      });
+      this.drawLine(coord);
+      this.drawLineLabel(coord);
 
       this.temp = undefined;
     } else {
