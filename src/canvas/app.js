@@ -37,21 +37,21 @@ class App {
       this.drawingBoard.clearCanvas();
       this.drawingBoard.drawPoint(coord);
     } else if (isMovingSecondPoint) {
-      if (evt.shiftKey) {
-        this.secondPoint = {
-          x: coord.x,
-          y: this.firstPoint.y
-        };
+      let userWantsAStraightLine = evt.shiftKey;
+
+      if (userWantsAStraightLine) {
+        this.secondPoint = {x: coord.x, y: this.firstPoint.y};
       } else {
         this.secondPoint = coord;
       }
 
-      this.drawingBoard.clearCanvas();
-
+      // Construct the line
       let line = {
         start: this.firstPoint,
         end: this.secondPoint,
       };
+
+      this.drawingBoard.clearCanvas();
       this.drawingBoard.drawLine(line);
       this.drawingBoard.drawLineLabel(line);
     }
